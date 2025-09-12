@@ -119,9 +119,3 @@ export const CloudUploadIcon: React.FC<IconProps> = ({ className }) => (
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
     </svg>
 );
-
-export const SparklesIcon: React.FC<IconProps> = ({ className }) => (
-    <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M19 3v4M17 5h4M14 11l-1.5-1.5L11 11l-1.5-1.5L8 11l-1.5-1.5L5 11l1.5 1.5L5 14l1.5 1.5L8 14l1.5 1.5L11 14l1.5 1.5L14 14l1.5-1.5L17 14l1.5-1.5L17 11l-1.5 1.5L14 11zM12 21a9 9 0 110-18 9 9 0 010 18z" />
-    </svg>
-);

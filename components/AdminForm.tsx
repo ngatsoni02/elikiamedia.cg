@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Article, Media, MediaType } from '../types';
 import { CATEGORIES } from '../constants';
-import { generateArticleContent } from '../services/geminiService';
 import { supabase } from '../services/supabaseClient';
-import { CloseIcon, ImageIcon, VideoIcon, FilePdfIcon, CloudUploadIcon, SparklesIcon } from './icons';
+import { CloseIcon, ImageIcon, VideoIcon, FilePdfIcon, CloudUploadIcon } from './icons';
 
 interface AdminFormProps {
     articleToEdit: Article | null;
@@ -21,7 +20,6 @@ const AdminForm: React.FC<AdminFormProps> = ({ articleToEdit, onSave, onCancel, 
     const [mediaUrl, setMediaUrl] = useState('');
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const contentRef = useRef<HTMLDivElement>(null);
-    const [isGenerating, setIsGenerating] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
 
@@ -80,24 +78,6 @@ const AdminForm: React.FC<AdminFormProps> = ({ articleToEdit, onSave, onCancel, 
         e.preventDefault();
         if (e.dataTransfer.files && e.dataTransfer.files[0]) {
             handleImageUpload(e.dataTransfer.files[0]);
-        }
-    };
-
-    const handleGenerateContent = async () => {
-        if (!title || !category) {
-            alert("Veuillez d'abord renseigner le titre et la catégorie.");
-            return;
-        }
-        setIsGenerating(true);
-        try {
-            const generatedContent = await generateArticleContent(title, category);
-            if (contentRef.current) {
-                contentRef.current.innerHTML = generatedContent;
-            }
-        } catch (error) {
-            alert("Erreur lors de la génération du contenu. Vérifiez la console pour plus de détails et assurez-vous que votre clé API est configurée.");
-        } finally {
-            setIsGenerating(false);
         }
     };
 
@@ -196,13 +176,7 @@ const AdminForm: React.FC<AdminFormProps> = ({ articleToEdit, onSave, onCancel, 
                 )}
 
                 <div>
-                     <div className="flex justify-between items-center mb-1">
-                        <label className="block text-sm font-bold text-gray-700">Contenu</label>
-                        <button type="button" onClick={handleGenerateContent} disabled={isGenerating || !process.env.API_KEY} className="flex items-center gap-2 text-sm bg-primary-gold text-primary-dark font-semibold px-3 py-1 rounded-md hover:bg-[#c19d2d] transition disabled:opacity-50 disabled:cursor-not-allowed">
-                            {isGenerating ? 'Génération...' : 'Générer avec IA'}
-                            <SparklesIcon className={`w-4 h-4 ${isGenerating ? 'animate-spin' : ''}`} />
-                        </button>
-                    </div>
+                    <label className="block text-sm font-bold text-gray-700 mb-1">Contenu</label>
                     <div ref={contentRef} contentEditable="true" className="w-full min-h-[200px] p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-gold focus:border-primary-gold" />
                 </div>
                 
