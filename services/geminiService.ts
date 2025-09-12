@@ -1,15 +1,15 @@
 
 import { GoogleGenAI } from "@google/genai";
 
-if (!process.env.API_KEY) {
-  console.warn("Gemini API key not found. AI features will be disabled. Please set the API_KEY environment variable.");
+if (!import.meta.env.VITE_GEMINI_API_KEY) {
+  console.warn("Gemini API key not found. AI features will be disabled. Please set VITE_GEMINI_API_KEY in your environment.");
 }
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
+const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY! });
 
 export const generateArticleContent = async (title: string, category: string): Promise<string> => {
-  if (!process.env.API_KEY) {
-    throw new Error("API_KEY environment variable not set.");
+  if (!import.meta.env.VITE_GEMINI_API_KEY) {
+    throw new Error("VITE_GEMINI_API_KEY environment variable not set.");
   }
   
   const prompt = `Rédige un article de presse en français pour un média en ligne nommé ELIKIA MEDIA, qui se concentre sur l'actualité africaine.
