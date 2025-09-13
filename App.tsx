@@ -6,7 +6,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import FeaturedCarousel from './components/FeaturedCarousel';
 import ArticleGrid from './components/ArticleGrid';
-import ArticleDetail from './components/ArticleDetail';
+import { ArticleDetail } from './components/ArticleDetail';
 import AdminForm from './components/AdminForm';
 import LoginModal from './components/LoginModal';
 import SettingsModal from './components/SettingsModal';
