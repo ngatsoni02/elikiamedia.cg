@@ -8,6 +8,7 @@ import FeaturedCarousel from './components/FeaturedCarousel';
 import ArticleGrid from './components/ArticleGrid';
 import ArticleDetail from './components/ArticleDetail';
 import AdminForm from './components/AdminForm';
+import { Routes, Route, useParams, useNavigate } from 'react-router-dom';
 import LoginModal from './components/LoginModal';
 import SettingsModal from './components/SettingsModal';
 import { ArrowLeftIcon, PlusIcon, CogIcon } from './components/icons';
@@ -307,6 +308,36 @@ function App() {
       {isSettingsModalOpen && isAdmin && <SettingsModal settings={settings} onSave={handleSaveSettings} onClose={() => setSettingsModalOpen(false)} />}
     </div>
   );
+}
+
+function ArticleDetailWrapper() {
+  const { slug } = useParams();
+  const navigate = useNavigate();
+  const [article, setArticle] = React.useState<Article | null>(null);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    async function fetchOne() {
+      if (!slug) return;
+      const { data, error } = await supabase
+        .from('articles')
+        .select('*')
+        .eq('slug', slug)
+        .single();
+      if (error) {
+        console.error('Supabase error', error);
+        navigate('/');
+        return;
+      }
+      setArticle(data as Article);
+      setLoading(false);
+    }
+    fetchOne();
+  }, [slug]);
+
+  if (loading) return <div className="p-6">Chargement...</div>;
+  if (!article) { navigate('/'); return null; }
+  return <ArticleDetail article={article} />;
 }
 
 export default App;
