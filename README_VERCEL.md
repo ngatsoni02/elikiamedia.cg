@@ -37,3 +37,8 @@ Ce projet a été préparé pour un déploiement **Vercel** en mode **Vite + SPA
 - Si vous avez des variables d'environnement (API, clés), déclarez-les dans **Vercel → Settings → Environment Variables**, puis redéployez.
 
 Bon déploiement !
+
+
+## Clé Gemini (facultative)
+- Définissez `VITE_GEMINI_API_KEY` dans **Vercel → Settings → Environment Variables**.
+- En local, mettez-la dans `.env.local` (non commité). Sans clé, les fonctions IA restent **désactivées** sans casser l'app.
