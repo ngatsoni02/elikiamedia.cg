@@ -3,6 +3,7 @@ import { Article, Settings } from './types';
 export const INITIAL_ARTICLES: Omit<Article, 'id' | 'date'>[] = [
     {
         title: "Sommet des chefs d'État africains à Addis-Abeba",
+        slug: "sommet-des-chefs-d-etat-africains-a-addis-abeba",
         category: "Politique",
         author: "Jean Kabasele",
         media: {
@@ -14,6 +15,7 @@ export const INITIAL_ARTICLES: Omit<Article, 'id' | 'date'>[] = [
     },
     {
         title: "Croissance économique en hausse de 5,2% en Afrique subsaharienne",
+        slug: "croissance-economique-en-hausse-de-5-2-en-afrique-subsaharienne",
         category: "Économie",
         author: "Marie-Louise Diallo",
         media: {
@@ -25,6 +27,7 @@ export const INITIAL_ARTICLES: Omit<Article, 'id' | 'date'>[] = [
     },
     {
         title: "Festival panafricain de cinéma : les lauréats dévoilés",
+        slug: "festival-panafricain-de-cinema-les-laureats-devoiles",
         category: "Culture",
         author: "Samuel N'diaye",
         media: {
@@ -36,6 +39,7 @@ export const INITIAL_ARTICLES: Omit<Article, 'id' | 'date'>[] = [
     },
     {
         title: "Rapport économique annuel 2025",
+        slug: "rapport-economique-annuel-2025",
         category: "Économie",
         author: "Ministère de l'Économie",
         media: {

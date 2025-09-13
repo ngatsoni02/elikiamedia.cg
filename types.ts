@@ -9,6 +9,7 @@ export interface Media {
 export interface Article {
   id: number | string;
   title: string;
+  slug: string;
   category: string;
   author: string;
   media: Media;

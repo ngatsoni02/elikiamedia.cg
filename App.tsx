@@ -75,6 +75,41 @@ function App() {
 
     return () => subscription.unsubscribe();
   }, [fetchAllData]);
+
+  // Gère le routage basé sur le hash de l'URL
+  useEffect(() => {
+    const handleRouting = () => {
+        const hash = window.location.hash;
+        if (hash.startsWith('#/article/')) {
+            const articleSlug = hash.substring('#/article/'.length);
+            if (articles.length > 0) {
+                const article = articles.find(a => a.slug === articleSlug);
+                if (article) {
+                    setSelectedArticle(article);
+                    setView('detail');
+                    window.scrollTo(0, 0);
+                } else {
+                    // Si l'article n'est pas trouvé, efface le hash et retourne à la liste
+                    window.location.hash = ''; 
+                    setView('list');
+                    setSelectedArticle(null);
+                }
+            }
+        } else {
+            setView('list');
+            setSelectedArticle(null);
+            setEditingArticle(null);
+        }
+    };
+
+    // Vérification initiale au montage du composant ou au chargement des articles
+    handleRouting();
+
+    window.addEventListener('hashchange', handleRouting);
+    return () => {
+        window.removeEventListener('hashchange', handleRouting);
+    };
+  }, [articles]);
   
   const handleLogin = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -87,15 +122,11 @@ function App() {
   };
 
   const handleSelectArticle = (article: Article) => {
-    setSelectedArticle(article);
-    setView('detail');
-    window.scrollTo(0, 0);
+    window.location.hash = `#/article/${article.slug}`;
   };
 
   const handleBackToList = () => {
-    setSelectedArticle(null);
-    setEditingArticle(null);
-    setView('list');
+    window.location.hash = '';
   };
 
   const handleNewArticle = () => {
@@ -113,7 +144,7 @@ function App() {
     
     const dbRecord = {
         ...articleData,
-        date: new Date().toISOString() // Update date on each save
+        date: new Date().toISOString() // Met à jour la date à chaque sauvegarde
     };
 
     let error;
