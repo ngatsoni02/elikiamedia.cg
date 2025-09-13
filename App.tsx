@@ -6,7 +6,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import FeaturedCarousel from './components/FeaturedCarousel';
 import ArticleGrid from './components/ArticleGrid';
-import { ArticleDetail } from './components/ArticleDetail';
+import ArticleDetail from './components/ArticleDetail';
 import AdminForm from './components/AdminForm';
 import LoginModal from './components/LoginModal';
 import SettingsModal from './components/SettingsModal';
@@ -208,13 +208,19 @@ function App() {
 
   const featuredArticles = useMemo(() => articles.filter(a => a.featured), [articles]);
 
-  if (loading) {
+  const isDirectArticleLink = useMemo(() => {
+    // Cette vérification ne s'exécute qu'une fois au montage du composant pour voir si nous chargeons un article directement.
+    return window.location.hash.startsWith('#/article/');
+  }, []);
+
+  // Affiche un écran de chargement lors de la récupération des données initiales, ou si nous chargeons un article directement et n'avons pas encore récupéré le tableau des articles.
+  if (loading || (isDirectArticleLink && articles.length === 0)) {
       return (
           <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
                <div className="font-serif font-bold text-5xl text-primary-dark animate-pulse mb-4 tracking-wider">
                   <span>ELIKIA</span> <span className="text-primary-gold">MEDIA</span>
               </div>
-              <p className="text-primary-dark font-serif text-xl">Chargement des données...</p>
+              <p className="text-primary-dark font-serif text-xl">Chargement...</p>
           </div>
       );
   }

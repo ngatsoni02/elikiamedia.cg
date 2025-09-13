@@ -1,3 +1,4 @@
+/* GEMINI DISABLED FOR VERCEL DEPLOY */
 
 import { GoogleGenAI } from "@google/genai";
 
@@ -20,7 +21,10 @@ La catégorie est : "${category}"
 L'article doit être bien structuré, informatif et engageant. Utilise des balises HTML simples pour la mise en forme : <p> pour les paragraphes et <h2> pour les sous-titres. N'inclus pas de balise <html>, <body> ou <head>. Commence directement par le contenu de l'article. L'article doit faire environ 3-4 paragraphes.`;
 
   try {
-    const response = await ai.models/* disabled */ Promise.resolve({ response: { text: () => "" } });
+    const response = await ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: prompt,
+    });
     return response.text;
   } catch (error) {
     console.error("Error generating content with Gemini:", error);

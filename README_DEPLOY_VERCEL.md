@@ -1,43 +1,24 @@
-# Déploiement sur Vercel (sans Gemini)
+# Déploiement sur Vercel — Elikia Media (v6)
 
-Ce projet a été nettoyé pour supprimer/neutraliser **toute intégration Gemini** afin d'éviter les erreurs d'API
-et faciliter le déploiement sur **Vercel**.
+Ce dépôt a été préparé pour un déploiement **Vercel** :
+- Scripts `npm run build` / `npm run preview` (Vite si présent).
+- **`vercel.json`** : assets servis tels quels + fallback SPA (`/(.*) -> /index.html`).
+- **`public/index.css`** : évite les 404 si référencé par `/index.css`.
+- **Gemini**: dépendances et imports neutralisés si trouvés.
 
-## Ce que j'ai fait
-- Retrait des dépendances Gemini dans `package.json` (ex: `@google/generative-ai`).
-- Neutralisation des imports et appels Gemini dans le code (voir `src/lib/gemini-disabled.ts`).
-- Ajout d'un `vercel.json` pour un build statique (Vite) et du routing SPA.
-- Ajout d'un `.vercelignore` pour ignorer les artefacts locaux.
-- Vérification/ajout du script `build` dans `package.json`.
-
-## Pré-requis
-- Node.js 18+
-- Vercel CLI (optionnel) : `npm i -g vercel`
-
-## Commandes locales
+## Local
 ```bash
 npm install
 npm run build
 npm run preview
 ```
 
-## Déploiement via GitHub
-1. **Crée un nouveau repo GitHub** et pousse le dossier.
-2. Sur **vercel.com**, crée un **New Project** → **Import Git Repository**.
-3. Framework preset : *Other* (ou Vite, si détecté automatiquement).
-4. **Build Command** : `npm run build`
-5. **Output Directory** : `dist`
-6. **Install Command** : laisser vide (Vercel détecte) ou `npm install`.
-7. Déploie. Vercel va builder puis servir `dist/`.
+## Vercel
+- **Build Command** : `npm run build`
+- **Output Directory** : `dist`
+- Framework Preset : **Other** (ou **Vite** si détecté)
 
-## Déploiement via Vercel CLI
-```bash
-vercel
-vercel --prod
-```
-
-## Notes
-- Tous les appels GEMINI sont **désactivés**. Les écrans continueront à fonctionner mais sans génération de texte.
-- Si tu dois réactiver l'IA plus tard, remplace les imports par un vrai client et configure les variables d'env côté Vercel.
+> Si tu utilises React Router en mode **HashRouter**, les liens `/#/article/...` fonctionneront sans réécritures supplémentaires.
+> Si tu utilises **BrowserRouter**, le fallback SPA gère les liens profonds `/article/...`.
 
 Bonne mise en ligne !
