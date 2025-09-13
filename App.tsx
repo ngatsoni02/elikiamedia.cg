@@ -76,9 +76,10 @@ function App() {
     return () => subscription.unsubscribe();
   }, [fetchAllData]);
 
-  // Gère le routage basé sur le hash de l'URL
+  // Gère le routage basé sur le hash de l'URL et met à jour le titre de la page
   useEffect(() => {
     const handleRouting = () => {
+        const defaultTitle = "ELIKIA MEDIA - L'information au cœur de l'Afrique";
         const hash = window.location.hash;
         if (hash.startsWith('#/article/')) {
             const articleSlug = hash.substring('#/article/'.length);
@@ -87,18 +88,21 @@ function App() {
                 if (article) {
                     setSelectedArticle(article);
                     setView('detail');
+                    document.title = `${article.title} | ELIKIA MEDIA`;
                     window.scrollTo(0, 0);
                 } else {
                     // Si l'article n'est pas trouvé, efface le hash et retourne à la liste
                     window.location.hash = ''; 
                     setView('list');
                     setSelectedArticle(null);
+                    document.title = defaultTitle;
                 }
             }
         } else {
             setView('list');
             setSelectedArticle(null);
             setEditingArticle(null);
+            document.title = defaultTitle;
         }
     };
 
