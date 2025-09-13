@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Article } from '../types';
 import { UserIcon, CalendarIcon, DownloadIcon } from './icons';
 
@@ -15,16 +14,7 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article }) => {
                 return <img src={article.media.url} alt={article.title} className="w-full h-auto max-h-[500px] object-cover rounded-lg mb-6 shadow-lg" />;
             case 'video':
                 const videoUrl = article.media.url.replace("watch?v=", "embed/");
-                return (<>
-        <Helmet>
-          <title>{article.title} – Elikia Media</title>
-          <meta property="og:title" content={article.title} />
-          <meta property="og:description" content={(article.content.replace(/<[^>]*>/g, '').slice(0, 150) + '...')} />
-          <meta property="og:image" content={article.media?.url} />
-          <meta property="og:url" content={`https://elikiamedia-cg.vercel.app/article/${article.slug}`} />
-          <meta name="twitter:card" content="summary_large_image" />
-        </Helmet>
-
+                return (
                     <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                         <iframe 
                             src={videoUrl} 
@@ -77,7 +67,7 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article }) => {
                 dangerouslySetInnerHTML={{ __html: article.content }}
             />
         </article>
-        </>);
+    );
 };
 
 export default ArticleDetail;

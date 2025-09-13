@@ -1,7 +1,5 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { slugify } from '../utils/slug';
 import { Article } from '../types';
 import { PlayIcon, PdfIcon, EditIcon } from './icons';
 
@@ -13,8 +11,6 @@ interface ArticleCardProps {
 }
 
 const ArticleCard: React.FC<ArticleCardProps> = ({ article, onSelect, onEdit, isAdmin }) => {
-    const safeSlug = article.slug && article.slug.length ? article.slug : slugify(article.title);
-
     const excerpt = article.content.replace(/<[^>]*>/g, '').substring(0, 120) + '...';
 
     const handleEditClick = (e: React.MouseEvent) => {
@@ -78,13 +74,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, onSelect, onEdit, is
 
             <div className="p-5 flex flex-col flex-grow">
                 <span className="inline-block bg-secondary-gold text-primary-dark px-3 py-1 rounded-full text-xs font-semibold mb-3 self-start">{article.category}</span>
-                <h3 className="font-serif text-xl font-bold text-primary-dark mb-2 flex-grow">
-  {safeSlug ? (
-    <Link to={`/article/${safeSlug}`} className="hover:underline">{article.title}</Link>
-  ) : (
-    <button onClick={onSelect} className="text-left w-full hover:underline">{article.title}</button>
-  )}
-</h3>
+                <h3 className="font-serif text-xl font-bold text-primary-dark mb-2 flex-grow">{article.title}</h3>
                 <p className="text-gray-600 text-sm mb-4 leading-relaxed">{excerpt}</p>
                 <div className="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center text-xs text-gray-500">
                     <span>Par <strong>{article.author}</strong></span>
